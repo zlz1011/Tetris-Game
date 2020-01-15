@@ -1,0 +1,120 @@
+# register assignments:
+# $0-4 sel_val
+# $5 sel
+# $6 enable
+# $7-10: x1-x4 input
+# $11-14: y1-y4 input
+# $15-18: x1-x4 output
+# $19-22: y1-y4 output
+# $25: direction
+
+en:
+	bne $6, $0, shape
+shape:
+	bne $5, $0, sel2
+	bne $25, $0, a_dir1
+	# x1-x4
+	add $15, $0, $8
+	add $16, $0, $8
+	add $17, $0, $8
+	add $18, $0, $8
+	# y1-y4
+	addi $19, $12, -1
+	addi $20, $12, 0
+	addi $21, $12, 1
+	addi $22, $12, 2
+	j en
+
+a_dir1:
+	bne $25, $1, a_dir2
+	# x1-x4
+	addi $15, $8, 1
+	addi $16, $8, 0
+	addi $17, $8, -1
+	addi $18, $8, -2
+	# y1-y4
+	add $19, $0, $12
+	add $20, $0, $12
+	add $21, $0, $12
+	add $22, $0, $12
+	j en
+a_dir2:
+	bne $25, $2, a_dir3	
+	# x1-x4
+	add $15, $0, $8
+	add $16, $0, $8
+	add $17, $0, $8
+	add $18, $0, $8
+	# y1-y4
+	addi $19, $12, 1
+	addi $20, $12, 0
+	addi $21, $12, -1
+	addi $22, $12, -2
+	j en
+a_dir3:
+	# x1-x4
+	addi $15, $8, -1
+	addi $16, $8, 0
+	addi $17, $8, 1
+	addi $18, $8, 2
+	# y1-y4
+	addi $19, $12, 0
+	addi $20, $12, 0
+	addi $21, $12, 0
+	addi $22, $12, 0
+	j en
+
+sel2:
+	bne $5, $0, en
+	bne $25, $0, b_dir1
+	# x1-x4
+	add $15, $0, $8
+	add $16, $0, $8
+	addi $17, $8, 1
+	add $18, $0, $8
+	# y1-y4
+	addi $19, $12, -1
+	addi $20, $12, 0
+	addi $21, $12, 0
+	addi $22, $12, 1
+	j en
+
+b_dir1:
+	bne $25, $1, b_dir2
+	# x1-x4
+	addi $15, $8, 1
+	addi $16, $8, 0
+	addi $17, $8, 0
+	addi $18, $8, -1
+	# y1-y4
+	addi $19, $12, 0
+	addi $20, $12, 0
+	addi $21, $12, 1
+	addi $22, $12, 0
+	j en
+b_dir2:
+	bne $25, $2, b_dir3	
+	# x1-x4
+	addi $15, $8, 0
+	addi $16, $8, 0
+	addi $17, $8, -1
+	addi $18, $8, 0
+	# y1-y4
+	addi $19, $12, 1
+	addi $20, $12, 0
+	addi $21, $12, 0
+	addi $22, $12, -1
+	j en
+b_dir3:
+	# x1-x4
+	addi $15, $8, -1
+	addi $16, $8, 0
+	addi $17, $8, 0
+	addi $18, $8, 1
+	# y1-y4
+	addi $19, $12, 0
+	addi $20, $12, 0
+	addi $21, $12, -1
+	addi $22, $12, 0
+	j en
+
